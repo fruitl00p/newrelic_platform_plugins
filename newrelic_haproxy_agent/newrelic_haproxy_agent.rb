@@ -44,6 +44,8 @@ require 'open-uri'
 #         verbose: 1
 #       agents:
 #         haproxy:
+#            # If you would like to alias this proxy using a label in the dashboard, fill this variable, defaults to the value of 'proxy'
+#            name: 
 #            # URI of the haproxy CSV stats url. See the 'CSV Export' link on your haproxy stats page (example stats page: http://demo.1wt.eu/).
 #            uri: http://demo.1wt.eu/;csv
 #            # The name of the proxy to monitor. Proxies are typically listed in the haproxy.cfg file.
@@ -62,7 +64,7 @@ module HaproxyAgent
     agent_guid   "com.railsware.haproxy"
     agent_config_options :uri, :proxy, :proxy_type, :user, :password
     agent_version '0.0.5'
-    agent_human_labels("Haproxy") { proxy }
+    agent_human_labels("Haproxy") { name ? name : proxy }
 
     def setup_metrics
       @requests=NewRelic::Processor::EpochCounter.new
